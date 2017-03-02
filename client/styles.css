@@ -1,0 +1,26 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+
+/* BODY + HEADER */
+body {
+ font-family: "Roboto", helvetica, arial, sans-serif;
+ font-size: 16px;
+ font-weight: 400;
+ margin: 0;
+}
+
+.header-row {
+ margin-top: 10px;
+ height: 80px;
+ background: #161a1d ;
+ text-align: center;
+ font-size: 64px;
+ color: azure;
+ padding-top: 16px;
+ padding-left: 16px;
+ margin-bottom: 30px;
+ box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+}
+
+#app-container {
+  text-align: center;
+}

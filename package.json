@@ -1,0 +1,29 @@
+{
+  "name": "web-crawler",
+  "version": "1.0.0",
+  "description": "crawls user-inputted urls",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec",
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "body-parser": "^1.16.1",
+    "cheerio": "^0.22.0",
+    "express": "^4.14.1",
+    "mongoose": "^4.8.4",
+    "request": "^2.79.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "node-mocks-http": "^1.6.1",
+    "nodemon": "^1.11.0"
+  }
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <link rel="shortcut icon" href="">
+    <title>Web Crawler</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+    <script data-require="jquery@*" data-semver="2.1.1" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  </head>
+  
+  <body>
+    <h1 class="header-row">
+      Web Crawler Hustle
+    </h1>
+
+    <div id="app-container">
+
+      <!--TODO: fix styling-->
+      <div class="form-container">
+          <form id="input-form" action="">
+              <input id="url-search-1" type="text" name="url1" placeholder="e.g. http://www.espn.com" required autofocus/>
+              <input id="url-search-2" type="text" name="url2" placeholder="e.g. http://www.google.com" required autofocus/>
+              <input id="url-search-3" type="text" name="url3" placeholder="e.g. http://www.amazon.com" required autofocus/>
+              <input id="url-search-4" type="text" name="url4" placeholder="e.g. http://www.pandora.com" required autofocus/>
+              <input id="url-search-5" type="text" name="url5" placeholder="e.g. http://www.spotify.com" required autofocus/>
+              <input id="url-submit" type="submit"/>
+          </form>
+      </div>
+
+      <div id="web-crawler-container">
+        <div id="output-data"></div>
+      </div>
+
+    <script src="./web_crawler.js"></script>
+  </body>
+</html>
+
+
