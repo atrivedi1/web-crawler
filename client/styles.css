@@ -24,3 +24,7 @@ body {
 #app-container {
   text-align: center;
 }
+
+.form-container {
+  margin-bottom: 30px;
+}

@@ -25,6 +25,14 @@ $( document ).ready(function(){
 
             success: function(urlData) {
                 console.log("Successfully retrieved  url data ", urlData);
+
+                for(var url in urlData) {
+                    for(var number in urlData[url]) {
+                        var phoneNumber = document.createElement("div");
+                        phoneNumber.innerText = number;
+                        $('#output-data').append(phoneNumber);
+                    }
+                }
             },
 
             error: function(err) {

@@ -8,31 +8,39 @@ var phoneNumberRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}
 var phoneNubmersByPagesVisited = {};
 var pagesToVisit = [];
 
-function visitPage(url, baseUrl, callback) {
+function visitPage(url, baseUrl, callback, res) {
   // Add page/numbers to our set
-  phoneNubmersByPagesVisited[url] = [];
+  phoneNubmersByPagesVisited[url] = {};
 
   // Make the request
   console.log("Visiting page " + url);
 
-  request(url, function(error, response, body) {
+  request(url, function(error, response, html) {
      // Check status code (200 is HTTP OK)
      if(response.statusCode !== 200) {
-       callback(pagesToVisit);
+       callback(pagesToVisit, res);
        return;
      }
      // Parse the document body
-     var $ = cheerio.load(body);
+     var $ = cheerio.load(html);
+
      collectPhoneNumbers($, url);
      collectInternalLinks($, baseUrl);
      // In this short program, our callback is just calling crawl()
-     callback(pagesToVisit);
-
+     callback(pagesToVisit, res);
   });
 }
 
 function collectPhoneNumbers($, url) {
+    $('body').find('div').each(function(i, element) {
+        var el = $(this);
+        var elementText = el.text();
 
+        if(phoneNumberRegex.test(elementText)) {
+            var phoneNumber = elementText.match(phoneNumberRegex).slice(0,1)[0];
+            phoneNubmersByPagesVisited[url][phoneNumber] = true;
+        }
+    })
 }
 
 function collectInternalLinks($, baseUrl) {
@@ -46,9 +54,10 @@ function collectInternalLinks($, baseUrl) {
     }
 }
 
-function recursiveCrawler(pagesToVisit) {
+function recursiveCrawler(pagesToVisit, res) {
         if(pagesToVisit.length === 0) {
             console.log("done recursively crawling!", Object.keys(phoneNubmersByPagesVisited).length);
+            res.send(phoneNubmersByPagesVisited).status(200);
             return;
         }
 
@@ -59,12 +68,12 @@ function recursiveCrawler(pagesToVisit) {
         if (nextPage in phoneNubmersByPagesVisited) {
             // We've already visited this page, so repeat the crawl
             console.log("already visited page! ", nextPage)
-            recursiveCrawler(pagesToVisit);
+            recursiveCrawler(pagesToVisit, res);
         } 
         
         else {
             // New page we haven't visited
-            visitPage(nextPage, baseUrl, recursiveCrawler);
+            visitPage(nextPage, baseUrl, recursiveCrawler, res);
         }
 }
  
@@ -72,13 +81,12 @@ module.exports = {
     crawl: function (req, res, cb) {
         console.log("firing crawl");
         var startingURLs = req.body.urls;
-        
+
         startingURLs.forEach(function(url){
             pagesToVisit.push(url);
         });
-
-        recursiveCrawler(pagesToVisit);
-        res.send(200);
+        
+        recursiveCrawler(pagesToVisit, res);
     }
 }
 
